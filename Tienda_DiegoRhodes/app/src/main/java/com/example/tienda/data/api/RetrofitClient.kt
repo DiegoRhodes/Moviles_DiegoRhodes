@@ -5,12 +5,17 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 object RetrofitClient {
-    private const val BASE_URL = "http://10.0.2.2:8080/"
 
-    private val client = OkHttpClient.Builder().build()
+    //private const val BASE_URL = "http://10.0.2.2:8080/"
+    //PREGUNTAR A CHECHU CUAL ES MEJOR DE LAS 2
+    //UTILZAR APICONFIG O TENERLA AQUI TMB :)
+
+    private val client = OkHttpClient.Builder()
+        .addInterceptor(AuthInterceptor())
+        .build()
 
     val api: ApiService = Retrofit.Builder()
-        .baseUrl(BASE_URL)
+        .baseUrl(ApiConfig.BASE_URL)
         .client(client)
         .addConverterFactory(GsonConverterFactory.create())
         .build()

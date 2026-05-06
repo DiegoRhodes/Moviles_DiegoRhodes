@@ -5,7 +5,6 @@ import com.example.tienda.data.dto.LoginResponse
 import retrofit2.http.Body
 import retrofit2.http.POST
 
-
 interface ApiService {
 
     @POST("login")

@@ -6,8 +6,9 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
-import com.example.tienda.screens.LoginPantalla
-import com.example.tienda.ui.theme.TIENDATheme
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.tienda.screens.LoginScreen
+import com.example.tienda.ui.theme.TiendaTheme
 
 class MainActivity : ComponentActivity() {
 
@@ -16,8 +17,11 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
 
         setContent {
-            TIENDATheme {
-                LoginPantalla()
+            TiendaTheme() {
+                LoginScreen(
+                    viewModel = viewModel(),
+                    onLoginSuccess = {}
+                )
             }
         }
     }
@@ -26,7 +30,10 @@ class MainActivity : ComponentActivity() {
 @Preview(showBackground = true)
 @Composable
 fun LoginPreview() {
-    TIENDATheme {
-        LoginPantalla()
+    TiendaTheme() {
+        LoginScreen(
+            viewModel = viewModel(),
+            onLoginSuccess = {}
+        )
     }
 }
