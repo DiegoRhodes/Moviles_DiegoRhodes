@@ -26,6 +26,7 @@ class LoginViewModel : ViewModel() {
                 val response = repo.login(username, password)
 
                 SessionManager.token = response.accessToken
+                SessionManager.username = username
                 Log.d("Token", response.accessToken)
 
                 state = state.copy(success = true)
