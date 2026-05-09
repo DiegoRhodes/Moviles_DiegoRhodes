@@ -1,6 +1,9 @@
 package com.example.tienda.viewmodel
 
 import android.util.Log
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.tienda.data.repository.ProductRepository
@@ -15,19 +18,15 @@ class ProductsViewModel : ViewModel() {
     val errorMessage get() = state.errorMessage
     val products get() = state.products
 
-    fun loadProducts() {
+    fun loadAllProducts() {
         viewModelScope.launch {
+            state.loadAllProducts()
+        }
+    }
 
-            // 🔥 LOG IMPORTANTE
-            Log.d("PRODUCTS_VM", "Llamando a loadAllProducts()")
-
-            Log.d("TOKEN_CHECK", "TOKEN = ${com.example.tienda.domain.SessionManager.token}")
-
-            try {
-                state.loadAllProducts()
-            } catch (e: Exception) {
-                Log.e("PRODUCTS_VM", "ERROR: ${e.message}")
-            }
+    fun loadProductsByCategory(categoryId: Long) {
+        viewModelScope.launch {
+            state.filterByCategory(categoryId)
         }
     }
 }

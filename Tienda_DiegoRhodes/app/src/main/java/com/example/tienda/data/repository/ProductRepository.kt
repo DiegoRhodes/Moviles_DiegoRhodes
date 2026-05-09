@@ -10,4 +10,7 @@ class ProductRepository {
     suspend fun getAllProducts(): List<ProductDto> {
         return apiService.getProducts()
     }
+    suspend fun getProductsByCategory(categoryId: Long): List<ProductDto> {
+        return RetrofitClient.api.getProductsByCategory(categoryId)
+    }
 }

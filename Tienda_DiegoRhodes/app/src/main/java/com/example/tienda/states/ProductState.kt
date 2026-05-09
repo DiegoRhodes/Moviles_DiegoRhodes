@@ -6,7 +6,7 @@ import androidx.compose.runtime.setValue
 import com.example.tienda.data.dto.ProductDto
 import com.example.tienda.data.repository.ProductRepository
 
-data class ProductState(private val productRepository: ProductRepository){
+class ProductState(private val productRepository: ProductRepository){
     var isLoading by mutableStateOf(false)
         private set
 
@@ -28,4 +28,18 @@ data class ProductState(private val productRepository: ProductRepository){
             isLoading = false
         }
     }
+
+    suspend fun filterByCategory(categoryId: Long) {
+        isLoading = true
+        errorMessage = null
+
+        try {
+            products = productRepository.getProductsByCategory(categoryId)
+        } catch (e: Exception) {
+            errorMessage = e.message ?: "Error cargando productos por categorías"
+        } finally {
+            isLoading = false
+        }
+    }
+
 }
