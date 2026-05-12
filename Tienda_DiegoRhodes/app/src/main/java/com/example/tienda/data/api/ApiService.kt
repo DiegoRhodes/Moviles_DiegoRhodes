@@ -20,8 +20,9 @@ interface ApiService {
     suspend fun getProducts(): List<ProductDto>
 
     @GET("api/v1/categories/{categoryId}/products")
-    suspend fun getProductsByCategory(@Path("categoryId") categoryId: Long): List<ProductDto>
-
+    suspend fun getProductsByCategory(
+        @Path("categoryId") categoryId: Long
+    ): List<ProductDto>
     @GET("api/v1/categories")
     suspend fun getCategories(): List<CategoryDto>
 

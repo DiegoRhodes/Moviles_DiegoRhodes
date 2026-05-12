@@ -16,15 +16,16 @@ class ProductState(private val productRepository: ProductRepository){
     var products by mutableStateOf<List<ProductDto>>(emptyList())
         private set
 
-    suspend fun loadAllProducts(){
+    suspend fun loadAllProducts() {
         isLoading = true
         errorMessage = null
 
         try {
+
             products = productRepository.getAllProducts()
-        }catch (e: Exception){
+        } catch (e: Exception){
             errorMessage = e.message ?: "Error cargando productos"
-        }finally {
+        } finally {
             isLoading = false
         }
     }
@@ -41,5 +42,4 @@ class ProductState(private val productRepository: ProductRepository){
             isLoading = false
         }
     }
-
 }

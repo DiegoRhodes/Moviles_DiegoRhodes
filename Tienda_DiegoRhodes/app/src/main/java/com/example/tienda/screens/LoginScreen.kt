@@ -63,7 +63,7 @@ fun LoginScreen(
             onClick = {
                 viewModel.login(usuario, password)
             },
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier.fillMaxWidth(), enabled = usuario.isNotBlank()&&password.isNotBlank()
         ) {
             Text("Entrar")
         }

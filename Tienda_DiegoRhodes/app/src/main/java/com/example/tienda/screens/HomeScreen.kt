@@ -13,8 +13,8 @@ fun HomeScreen() {
         factory = { context ->
             WebView(context).apply {
                 settings.javaScriptEnabled = true
-                loadUrl("https://aulavirtual33.educa.madrid.org/ies.claradelrey.madrid/")
-                //loadUrl("http://10.0.2.2:8080/")
+                //loadUrl("https://aulavirtual33.educa.madrid.org/ies.claradelrey.madrid/")
+                loadUrl("http://10.0.2.2:8080/")
 
             }
         }

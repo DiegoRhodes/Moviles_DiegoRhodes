@@ -1,6 +1,7 @@
 package com.example.tienda.data.dto
 
 data class ProductDto(
+    val prodId: String,
     val prodCode: String,
     val prodName: String,
     val prodBrand: String,

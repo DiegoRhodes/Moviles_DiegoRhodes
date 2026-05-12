@@ -6,6 +6,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.tienda.data.dto.ProductDto
 import com.example.tienda.data.repository.ProductRepository
 import com.example.tienda.states.ProductState
 import kotlinx.coroutines.launch
@@ -14,19 +15,56 @@ class ProductsViewModel : ViewModel() {
 
     private val state = ProductState(ProductRepository())
 
+    var currentPage by mutableStateOf(0)
+        private set
+
+    private val pageSize = 5
+
+
     val isLoading get() = state.isLoading
     val errorMessage get() = state.errorMessage
-    val products get() = state.products
+
+    val productsToShow: List<ProductDto>
+        get() {
+            val allProducts = state.products
+            val start = currentPage * pageSize
+            val end = minOf(start + pageSize, allProducts.size)
+
+            return if (start < allProducts.size) {
+                allProducts.subList(start, end)
+            } else {
+                emptyList()
+            }
+        }
 
     fun loadAllProducts() {
+        currentPage = 0
         viewModelScope.launch {
             state.loadAllProducts()
         }
     }
 
     fun loadProductsByCategory(categoryId: Long) {
+        Log.d("FILTRADO", "Pulsado botón de categoría con ID: $categoryId")
+        currentPage = 0
         viewModelScope.launch {
             state.filterByCategory(categoryId)
         }
+    }
+
+    fun nextPage() {
+
+        if ((currentPage + 1) * pageSize < state.products.size) {
+            currentPage++
+        }
+    }
+
+    fun previousPage() {
+        if (currentPage > 0) {
+            currentPage--
+        }
+    }
+    fun hasNextPage(): Boolean {
+        return (currentPage + 1) * pageSize < state.products.size
     }
 }
