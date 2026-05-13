@@ -22,7 +22,6 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.tienda.viewmodel.ProductsViewModel
 import androidx.compose.material3.Button
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
@@ -82,8 +81,7 @@ fun ProductsScreen(
                         .fillMaxWidth()
                         .padding(vertical = 4.dp, horizontal = 8.dp)
                         .clickable {
-                            val idL = product.prodId.toLongOrNull() ?: 0L
-                            navController.navigate("productDetail/$idL")
+                            navController.navigate("productDetail/${product.prodId}")
                         }
                 ) {
 
@@ -97,7 +95,6 @@ fun ProductsScreen(
                         AsyncImage(
                             model = ImageRequest.Builder(LocalContext.current)
                                 .data(product.prodImage)
-                                .setHeader("User-Agent", "Mozilla/5.0")
                                 .build(),
                             contentDescription = null,
                             modifier = Modifier.size(100.dp),
@@ -111,13 +108,10 @@ fun ProductsScreen(
                         ) {
                             Text(
                                 text = product.prodName,
-                                style = MaterialTheme.typography.titleMedium
                             )
                             Spacer(modifier = Modifier.height(4.dp))
                             Text(
                                 text = "${product.prodPrice} €",
-                                style = MaterialTheme.typography.bodyLarge,
-                                color = MaterialTheme.colorScheme.primary
                             )
                         }
                     }
@@ -140,8 +134,7 @@ fun ProductsScreen(
             }
 
             Text(
-                text = "Página ${currentPage + 1}",
-                style = MaterialTheme.typography.bodyMedium
+                text = "Pagina ${currentPage + 1}"
             )
 
             Button(
