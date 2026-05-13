@@ -10,6 +10,7 @@ import com.example.tienda.data.repository.TiendaRepository
 import com.example.tienda.domain.SessionManager
 import com.example.tienda.states.LoginState
 import kotlinx.coroutines.launch
+import retrofit2.HttpException
 
 
 class LoginViewModel : ViewModel() {
@@ -20,19 +21,23 @@ class LoginViewModel : ViewModel() {
         private set
 
     fun login(username: String, password: String) {
-
         viewModelScope.launch {
+            state = state.copy(error = null)
+
             try {
                 val response = repo.login(username, password)
-
                 SessionManager.token = response.accessToken
                 SessionManager.username = username
-                Log.d("Token", response.accessToken)
-
                 state = state.copy(success = true)
 
+            } catch (e: HttpException) {
+                val mensajePersonalizado = when (e.code()) {
+                    401 -> "Usuario o contraseña incorrectos"
+                    else -> "Error inesperado: ${e.code()}"
+                }
+                state = state.copy(error = mensajePersonalizado)
             } catch (e: Exception) {
-                state = state.copy(error = e.message ?: "Error desconocido")
+                state = state.copy(error = "No se pudo conectar con el servidor")
             }
         }
     }

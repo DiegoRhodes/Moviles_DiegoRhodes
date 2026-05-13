@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
@@ -69,11 +70,11 @@ fun LoginScreen(
         }
 
 
-        state.error?.let {
+        state.error?.let { mensajeError ->
             Spacer(modifier = Modifier.height(12.dp))
             Text(
-                text = it,
-                color = MaterialTheme.colorScheme.error
+                text = mensajeError,
+                color = Color.Red
             )
         }
     }

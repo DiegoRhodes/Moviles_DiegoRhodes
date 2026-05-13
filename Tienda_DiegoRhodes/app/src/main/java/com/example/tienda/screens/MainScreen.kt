@@ -54,7 +54,7 @@ fun MainScreen(navController: NavHostController) {
 
 
             composable(
-                route = "productDetail/{productId}",
+                Routes.PRODUCT_DETAIL,
                 arguments = listOf(navArgument("productId") { type = NavType.LongType })
             ) { backStackEntry ->
                 val id = backStackEntry.arguments?.getLong("productId") ?: 0L

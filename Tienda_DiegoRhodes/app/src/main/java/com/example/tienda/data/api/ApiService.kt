@@ -44,7 +44,7 @@ interface ApiService {
     ): CartResponseDto
 
     @DELETE("api/v1/cart/{productId}")
-    suspend fun deleteFromCart(
+    suspend fun removeItemFromCart(
         @Path("productId") productId: Long
     ): CartResponseDto
 }

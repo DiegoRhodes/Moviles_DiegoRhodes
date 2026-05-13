@@ -12,4 +12,7 @@ class CartRepository {
     suspend fun addProduct(productId: Long, prodQuantity: Int): CartResponseDto {
         return api.addToCart(AddCartDto(prodId = productId, prodQuantity = prodQuantity))
     }
+    suspend fun removeItem(productId: Long): CartResponseDto {
+        return api.removeItemFromCart(productId)
+    }
 }

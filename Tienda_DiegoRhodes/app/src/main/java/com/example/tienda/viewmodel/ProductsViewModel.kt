@@ -47,8 +47,6 @@ class ProductsViewModel : ViewModel() {
                 selectedProduct = response
             } catch (e: Exception) {
                 Log.e("API_ERROR", "Error: ${e.message}")
-                // Si hay un error (como el 403), ponemos un producto vacío o
-                // mandamos un mensaje para que no se quede el cargando infinito
                 selectedProduct = null
             }
         }

@@ -16,7 +16,6 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -56,7 +55,7 @@ fun ProductDetailScreen(
             IconButton(onClick = { navController.popBackStack() }) {
                 Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = null)
             }
-            Text(text = "Detalle del Producto", style = MaterialTheme.typography.titleLarge)
+            Text(text = "Detalle del Producto")
         }
 
         if (product != null) {
@@ -73,15 +72,11 @@ fun ProductDetailScreen(
                 modifier = Modifier.fillMaxWidth().height(220.dp).padding(16.dp)
             )
 
-            Text(text = product.prodName, style = MaterialTheme.typography.headlineMedium)
-            Text(text = "${product.prodPrice} €", color = MaterialTheme.colorScheme.primary, style = MaterialTheme.typography.titleLarge)
-
+            Text(text = product.prodName)
             Spacer(modifier = Modifier.height(8.dp))
 
             Text(
-                text = if (availableStock > 0) "Disponibles: $availableStock" else "¡AGOTADO!",
-                color = if (availableStock > 0) Color.Gray else Color.Red,
-                style = MaterialTheme.typography.bodyMedium
+                text = if (availableStock > 0) "Disponibles: $availableStock" else "AGOTADO"
             )
 
             Spacer(modifier = Modifier.height(24.dp))
@@ -100,7 +95,6 @@ fun ProductDetailScreen(
 
                 Text(
                     text = "$quantity",
-                    style = MaterialTheme.typography.headlineLarge,
                     modifier = Modifier.padding(horizontal = 24.dp)
                 )
 

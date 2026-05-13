@@ -32,22 +32,27 @@ class CartViewModel : ViewModel() {
         viewModelScope.launch {
             isLoading = true
             try {
-                // Log para ver qué intentamos enviar
                 Log.d("CARRITO", "Enviando: ID=$productId, Units=$prodQuantity")
-
                 val response = repository.addProduct(productId, prodQuantity)
                 cartResponse = response
-
-                // SI ESTO NO SE EJECUTA, LA PANTALLA NO SE CIERRA
                 isAddedSuccess = true
                 Log.d("CARRITO", "¡Éxito! Navegando atrás...")
             } catch (e: Exception) {
-                // ESTO ES LO QUE NECESITAMOS VER EN EL LOGCAT
                 Log.e("CARRITO_ERROR", "ERROR FATAL: ${e.message}")
-                // Si aquí sale "HTTP 400", los nombres del DTO están mal.
-                // Si sale "HTTP 403", es un problema de permisos/token.
             } finally {
                 isLoading = false
+            }
+        }
+    }
+    fun removeItem(productId: Long) {
+        viewModelScope.launch {
+            try {
+                val response = repository.removeItem(productId)
+                cartResponse = response
+                Log.d("CARRITO", "Producto $productId eliminado correctamente")
+            } catch (e: Exception) {
+                Log.e("CARRITO_ERROR", "Error al eliminar producto: ${e.message}")
+            } finally {
             }
         }
     }

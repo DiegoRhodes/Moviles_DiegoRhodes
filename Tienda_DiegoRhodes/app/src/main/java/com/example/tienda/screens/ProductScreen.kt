@@ -33,7 +33,7 @@ import com.example.tienda.viewmodel.CategoriesViewModel
 
 @Composable
 fun ProductsScreen(
-    navController: NavHostController, // Añadido para poder navegar
+    navController: NavHostController,
     productsViewModel: ProductsViewModel = viewModel(),
     categoriesViewModel: CategoriesViewModel = viewModel()
 ) {
@@ -82,7 +82,6 @@ fun ProductsScreen(
                         .fillMaxWidth()
                         .padding(vertical = 4.dp, horizontal = 8.dp)
                         .clickable {
-                            // Esto evita que si prodId es un String raro, la app pete
                             val idL = product.prodId.toLongOrNull() ?: 0L
                             navController.navigate("productDetail/$idL")
                         }
