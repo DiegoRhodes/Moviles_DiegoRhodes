@@ -1,10 +1,13 @@
 package com.example.tienda.data.api
 
+import com.example.tienda.data.dto.AddCartDto
+import com.example.tienda.data.dto.CartResponseDto
 import com.example.tienda.data.dto.CategoryDto
 import com.example.tienda.data.dto.LoginRequest
 import com.example.tienda.data.dto.LoginResponse
 import com.example.tienda.data.dto.ProductDto
 import retrofit2.http.Body
+import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.Path
@@ -23,10 +26,25 @@ interface ApiService {
     suspend fun getProductsByCategory(
         @Path("categoryId") categoryId: Long
     ): List<ProductDto>
+
     @GET("api/v1/categories")
     suspend fun getCategories(): List<CategoryDto>
 
+    @GET("api/v1/products/{productId}")
+    suspend fun getProductById(
+        @Path("productId") productId: Long
+    ): ProductDto
 
+    @GET("api/v1/cart")
+    suspend fun getCart(): CartResponseDto
 
+    @POST("api/v1/cart")
+    suspend fun addToCart(
+        @Body body: AddCartDto
+    ): CartResponseDto
 
+    @DELETE("api/v1/cart/{productId}")
+    suspend fun deleteFromCart(
+        @Path("productId") productId: Long
+    ): CartResponseDto
 }

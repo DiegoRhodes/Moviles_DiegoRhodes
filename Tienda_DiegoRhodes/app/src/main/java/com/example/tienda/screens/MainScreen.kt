@@ -24,6 +24,8 @@ import androidx.compose.foundation.Image
 import androidx.compose.material.icons.filled.ExitToApp
 import androidx.compose.material3.IconButton
 import androidx.compose.ui.res.painterResource
+import androidx.navigation.NavType
+import androidx.navigation.navArgument
 import com.example.tienda.R
 
 @Composable
@@ -41,17 +43,25 @@ fun MainScreen(navController: NavHostController) {
             startDestination = Routes.HOME,
             modifier = Modifier.padding(padding)
         ) {
+            composable(Routes.HOME) { HomeScreen() }
 
-            composable(Routes.HOME) {
-                HomeScreen()
-            }
 
             composable(Routes.PRODUCTS) {
-                ProductsScreen()
+                ProductsScreen(navController = innerNavController)
             }
 
-            composable(Routes.CART) {
-                CartScreen()
+            composable(Routes.CART) { CartScreen(navController = navController) }
+
+
+            composable(
+                route = "productDetail/{productId}",
+                arguments = listOf(navArgument("productId") { type = NavType.LongType })
+            ) { backStackEntry ->
+                val id = backStackEntry.arguments?.getLong("productId") ?: 0L
+                ProductDetailScreen(
+                    productId = id,
+                    navController = innerNavController
+                )
             }
         }
     }

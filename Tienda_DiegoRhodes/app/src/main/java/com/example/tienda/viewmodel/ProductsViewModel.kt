@@ -6,6 +6,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.tienda.data.api.RetrofitClient
 import com.example.tienda.data.dto.ProductDto
 import com.example.tienda.data.repository.ProductRepository
 import com.example.tienda.states.ProductState
@@ -20,6 +21,8 @@ class ProductsViewModel : ViewModel() {
 
     private val pageSize = 5
 
+    var selectedProduct by mutableStateOf<ProductDto?>(null)
+        private set
 
     val isLoading get() = state.isLoading
     val errorMessage get() = state.errorMessage
@@ -37,6 +40,20 @@ class ProductsViewModel : ViewModel() {
             }
         }
 
+    fun loadProductById(productId: Long) {
+        viewModelScope.launch {
+            try {
+                val response = RetrofitClient.api.getProductById(productId)
+                selectedProduct = response
+            } catch (e: Exception) {
+                Log.e("API_ERROR", "Error: ${e.message}")
+                // Si hay un error (como el 403), ponemos un producto vacío o
+                // mandamos un mensaje para que no se quede el cargando infinito
+                selectedProduct = null
+            }
+        }
+    }
+
     fun loadAllProducts() {
         currentPage = 0
         viewModelScope.launch {
@@ -45,7 +62,6 @@ class ProductsViewModel : ViewModel() {
     }
 
     fun loadProductsByCategory(categoryId: Long) {
-        Log.d("FILTRADO", "Pulsado botón de categoría con ID: $categoryId")
         currentPage = 0
         viewModelScope.launch {
             state.filterByCategory(categoryId)
@@ -53,7 +69,6 @@ class ProductsViewModel : ViewModel() {
     }
 
     fun nextPage() {
-
         if ((currentPage + 1) * pageSize < state.products.size) {
             currentPage++
         }
@@ -64,6 +79,7 @@ class ProductsViewModel : ViewModel() {
             currentPage--
         }
     }
+
     fun hasNextPage(): Boolean {
         return (currentPage + 1) * pageSize < state.products.size
     }

@@ -9,7 +9,6 @@ data class ProductDto(
     val prodImage: String,
     val prodPrice: Double,
     val prodDiscount: Int,
-    //val rarity: RarityDto,
+    val prodStock: Int,
     val categories: List<CategoryDto>
-
 )
